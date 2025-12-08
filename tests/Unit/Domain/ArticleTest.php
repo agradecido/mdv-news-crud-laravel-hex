@@ -7,31 +7,39 @@ namespace Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use Src\Domain\Articles\Article;
-use Src\Domain\Articles\Exceptions\ArticleContentRequiredException;
 use Src\Domain\Articles\Enums\ArticleStatus;
 use DateTimeImmutable;
 
 class ArticleTest extends TestCase
 {
-    public function test_it_throws_exception_when_content_and_link_are_missing(): void
+    public function test_it_creates_article_with_content(): void
     {
-        $content = null;
-        $link = null;
+        // Arrange: Preparamos los datos del artículo
+        $title = 'Mi primer artículo sobre DDD';
+        $content = 'Este es el contenido completo del artículo sobre Domain-Driven Design.';
+        $author = 'Juan Pérez';
+        $featuredImage = 'https://example.com/ddd-article.jpg';
+        $receivedAt = new DateTimeImmutable('2025-12-06 10:00:00');
+        $status = ArticleStatus::DRAFT;
 
-        // 2. Expectativa: Aquí le decimos a PHPUnit que esté atento a un error específico.
-        $this->expectException(ArticleContentRequiredException::class);
-
-        // 3. Acción: Intentamos instanciar la clase (esto debería detonar la bomba 💣)
-        new Article(
-            title: 'Título de prueba',
+        // Act: Creamos el artículo
+        $article = new Article(
+            title: $title,
             content: $content,
-            source_link: $link,
-            author: 'Autor de prueba',
-            featured_image: 'https://example.com/image.jpg',
-            received_at: new DateTimeImmutable(), // now.
+            author: $author,
+            featured_image: $featuredImage,
+            received_at: $receivedAt,
             published_at: null,
-            status: ArticleStatus::DRAFT,
-
+            status: $status,
         );
+
+        // Assert: Verificamos que todos los getters devuelven los valores correctos
+        $this->assertSame($title, $article->title());
+        $this->assertSame($content, $article->content());
+        $this->assertSame($author, $article->author());
+        $this->assertSame($featuredImage, $article->featuredImage());
+        $this->assertSame($receivedAt, $article->receivedAt());
+        $this->assertNull($article->publishedAt());
+        $this->assertSame($status, $article->status());
     }
 }

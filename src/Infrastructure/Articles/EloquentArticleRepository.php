@@ -3,16 +3,16 @@
 
 namespace Src\Infrastructure\Articles;
 
-use App\Models\Article as EloquentModel;
+use App\Models\Article as EloquentArticle;
 use Src\Domain\Articles\Article;
 use Src\Domain\Articles\ArticleRepository;
+use \Src\Domain\Articles\Enums\ArticleStatus;
 
 final class EloquentArticleRepository implements ArticleRepository
 {
     public function save(Article $article): void
     {
-        // Usamos updateOrCreate para que sirva tanto para Crear como para Editar
-        EloquentModel::updateOrCreate(
+        EloquentArticle::updateOrCreate(
             ['uuid' => $article->uuid()],
             [
                 'title' => $article->title(),
@@ -28,7 +28,7 @@ final class EloquentArticleRepository implements ArticleRepository
 
     public function findByUuid(string $uuid): ?Article
     {
-        $record = EloquentModel::where('uuid', $uuid)->first();
+        $record = EloquentArticle::where('uuid', $uuid)->first();
 
         if ($record === null) {
             return null;
@@ -42,7 +42,7 @@ final class EloquentArticleRepository implements ArticleRepository
             $record->featured_image,
             new \DateTimeImmutable($record->received_at),
             $record->published_at ? new \DateTimeImmutable($record->published_at) : null,
-            \Src\Domain\Articles\Enums\ArticleStatus::from($record->status)
+            ArticleStatus::from($record->status)
         );
     }
 }

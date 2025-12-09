@@ -6,6 +6,7 @@ namespace Src\Application\Articles;
 
 use Src\Domain\Articles\Article;
 use Src\Domain\Articles\ArticleRepository;
+use Illuminate\Support\Str;
 
 final class CreateArticle
 {
@@ -20,8 +21,9 @@ final class CreateArticle
         string $author,
         ?string $featured_image = null
     ): Article {
-
+        $uuid = (string) Str::uuid();
         $article = Article::create(
+            $uuid,
             $title,
             $content,
             $author,

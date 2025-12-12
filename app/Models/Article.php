@@ -18,6 +18,13 @@ class Article extends Model
 
     // También es buena práctica definir qué campos se pueden rellenar masivamente
     protected $fillable = [
-        'uuid', 'title', 'content', 'author', 'featured_image', 'published_at', 'status'
+        'uuid',
+        'title',
+        'content',
+        'author',
+        'featured_image',
+        'received_at',
+        'published_at',
+        'status'
     ];
 }

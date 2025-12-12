@@ -15,6 +15,7 @@ class ArticleTest extends TestCase
     public function test_it_creates_article_with_content(): void
     {
         // Arrange: Preparamos los datos del artículo
+        $uuid = 'test-uuid-1234';
         $title = 'Mi primer artículo sobre DDD';
         $content = 'Este es el contenido completo del artículo sobre Domain-Driven Design.';
         $author = 'Juan Pérez';
@@ -24,6 +25,7 @@ class ArticleTest extends TestCase
 
         // Act: Creamos el artículo
         $article = new Article(
+            uuid: $uuid,
             title: $title,
             content: $content,
             author: $author,

@@ -1,4 +1,7 @@
 <?php
+// file: src/Application/Articles/CreateArticle.php
+
+// UseCase
 
 declare(strict_types=1);
 
@@ -11,9 +14,7 @@ use Illuminate\Support\Str;
 final class CreateArticle
 {
     // We inject the interface, not the concrete implementation (Dependency Injection)
-    public function __construct(private ArticleRepository $repository)
-    {
-    }
+    public function __construct(private ArticleRepository $repository) {}
 
     public function execute(
         string $title,
@@ -27,6 +28,7 @@ final class CreateArticle
             $title,
             $content,
             $author,
+            now()->toImmutable(),
             $featured_image
         );
 

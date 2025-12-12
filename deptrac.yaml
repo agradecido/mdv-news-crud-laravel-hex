@@ -1,0 +1,23 @@
+deptrac:
+  paths:
+    - ./src
+  layers:
+    - name: Domain
+      collectors:
+        - type: directory
+          value: src/Domain/.*
+    - name: Application
+      collectors:
+        - type: directory
+          value: src/Application/.*
+    - name: Infrastructure
+      collectors:
+        - type: directory
+          value: src/Infrastructure/.*
+  ruleset:
+    Domain: []  # Domain NO puede depender de nada
+    Application:
+      - Domain  # Application puede usar Domain
+    Infrastructure:
+      - Domain
+      - Application  # Infrastructure puede usar ambos

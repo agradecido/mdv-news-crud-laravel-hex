@@ -15,12 +15,11 @@ final class Article
         private string $title,
         private ?string $content,
         private string $author,
-        private ?string $featured_image,
         private DateTimeImmutable $received_at,
+        private ?string $featured_image,
         private ?DateTimeImmutable $published_at,
         private ArticleStatus $status,
-    ) {
-    }
+    ) {}
 
     // Named constructor
     public static function create(
@@ -28,15 +27,16 @@ final class Article
         string $title,
         ?string $content,
         string $author,
-        ?string $featured_image = null
+        DateTimeImmutable $received_at,
+        ?string $featured_image = null,
     ): self {
         return new self(
             $uuid,
             $title,
             $content,
             $author,
-            $featured_image,
             new DateTimeImmutable(),
+            $featured_image,
             null,
             ArticleStatus::DRAFT
         );

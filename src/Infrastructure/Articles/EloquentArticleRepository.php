@@ -1,6 +1,8 @@
 <?php
 // file: src/Infrastructure/Articles/EloquentArticleRepository.php
 
+declare(strict_types=1);
+
 namespace Src\Infrastructure\Articles;
 
 use App\Models\Article as EloquentArticle;
@@ -13,13 +15,15 @@ final class EloquentArticleRepository implements ArticleRepository
     public function save(Article $article): void
     {
         EloquentArticle::updateOrCreate(
-            ['uuid' => $article->uuid()],
+            [
+                'uuid' => $article->uuid()
+            ],
             [
                 'title' => $article->title(),
                 'content' => $article->content(),
                 'author' => $article->author(),
-                'featured_image' => $article->featuredImage(),
                 'received_at' => $article->receivedAt(),
+                'featured_image' => $article->featuredImage(),
                 'published_at' => $article->publishedAt(),
                 'status' => $article->status()->value,
             ]
@@ -39,8 +43,8 @@ final class EloquentArticleRepository implements ArticleRepository
             $record->title,
             $record->content,
             $record->author,
-            $record->featured_image,
             new \DateTimeImmutable($record->received_at),
+            $record->featured_image,
             $record->published_at ? new \DateTimeImmutable($record->published_at) : null,
             ArticleStatus::from($record->status)
         );
